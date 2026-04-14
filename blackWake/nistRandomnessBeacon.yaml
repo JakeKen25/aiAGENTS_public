@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: NIST Randomness Beacon API
+  description: API to retrieve the latest full-entropy random value from the NIST Randomness Beacon.
+  version: 1.0.0
+servers:
+  - url: https://beacon.nist.gov/beacon/2.0
+    description: NIST Beacon v2 Production Server
+paths:
+  /pulse/last:
+    get:
+      operationId: getLatestPulse
+      summary: Get the latest randomness pulse
+      description: Returns the most recent randomness pulse from the NIST Randomness Beacon.
+      responses:
+        '200':
+          description: Latest pulse retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pulse:
+                    type: object
+                    properties:
+                      uri:
+                        type: string
+                      version:
+                        type: string
+                      cipherSuite:
+                        type: integer
+                      period:
+                        type: integer
+                      certificateId:
+                        type: string
+                      chainIndex:
+                        type: integer
+                      pulseIndex:
+                        type: integer
+                      timeStamp:
+                        type: integer
+                      localRandomValue:
+                        type: string
+                      external:
+                        type: array
+                        items:
+                          type: object
+                      listValues:
+                        type: array
+                        items:
+                          type: string
+                      outputValue:
+                        type: string
+                      signatureValue:
+                        type: string
+        '500':
+          description: Server error from NIST Beacon
